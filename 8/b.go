@@ -2,27 +2,12 @@ package main
 
 import (
 	"fmt"
+	"lee/aoc/helpers"
 	"os"
 	"strings"
 )
 
-type Match []int
-
-func (m *Match) Push(i int) {
-	(*m) = append(*m, i)
-}
-
-func (m *Match) Pop() int {
-	return (*m)[len(*m)-1]
-}
-
-func (m *Match) Shift() int {
-	return (*m)[0]
-}
-
-func (m *Match) Present() bool {
-	return len(*m) > 0
-}
+type Match = helpers.Stack[int]
 
 func get_top_score(tree int, hi int, vi int, rows []string) int {
 	matches := Match{}
