@@ -7,11 +7,15 @@ func (m *Stack[T]) Push(i T) {
 }
 
 func (m *Stack[T]) Pop() T {
-	return (*m)[len(*m)-1]
+	last := (*m)[len(*m)-1]
+	*m = (*m)[:len((*m))-1]
+	return last
 }
 
 func (m *Stack[T]) Shift() T {
-	return (*m)[0]
+	first := (*m)[0]
+	*m = (*m)[1:]
+	return first
 }
 
 func (m *Stack[T]) Present() bool {
