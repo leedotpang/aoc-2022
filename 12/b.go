@@ -12,11 +12,10 @@ type Coordinates struct {
 	x int
 }
 
-type SearchQueue = helpers.Stack[Coordinates]
-type Connections = helpers.Stack[Coordinates]
+type CoordinatesQueue = helpers.Queue[Coordinates]
 
 func find_many_coordinates(s rune, rows []string) []Coordinates {
-	coordinates := SearchQueue{}
+	coordinates := CoordinatesQueue{}
 
 	for vi, row := range rows {
 		for hi, col := range row {
@@ -42,15 +41,15 @@ func find_coordinates(s rune, rows []string) Coordinates {
 
 func calculate_shortest_path(s Coordinates, e Coordinates, rows []string) int {
 	curr_coordinate := s
-	search_queue := SearchQueue{s}
-	connections := map[Coordinates]*SearchQueue{}
+	search_queue := CoordinatesQueue{s}
+	connections := map[Coordinates]*CoordinatesQueue{}
 	distances := map[Coordinates]int{}
 	visited := map[Coordinates]bool{}
 
 	for vi, row := range rows {
 		for hi, col := range row {
 			curr_coordinate = Coordinates{x: hi, y: vi}
-			connections[curr_coordinate] = &Connections{}
+			connections[curr_coordinate] = &CoordinatesQueue{}
 			distances[curr_coordinate] = 99999
 
 			if curr_coordinate == s {
@@ -79,7 +78,7 @@ func calculate_shortest_path(s Coordinates, e Coordinates, rows []string) int {
 		}
 	}
 
-	for q_len := len(search_queue); q_len > 0; q_len = len(search_queue) {
+	for search_queue.Present() {
 		next := search_queue.Shift()
 
 		for _, node := range *connections[next] {

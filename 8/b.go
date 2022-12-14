@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
-type Match = helpers.Stack[int]
+type MatchStack = helpers.Stack[int]
+type MatchQueue = helpers.Queue[int]
 
 func get_top_score(tree int, hi int, vi int, rows []string) int {
-	matches := Match{}
+	matches := MatchStack{}
 
 	for index, tree_compare := range rows {
 		if index == vi {
@@ -29,7 +30,7 @@ func get_top_score(tree int, hi int, vi int, rows []string) int {
 }
 
 func get_bottom_score(tree int, hi int, vi int, rows []string) int {
-	matches := Match{}
+	matches := MatchQueue{}
 
 	for index, tree_compare := range rows {
 		if index <= vi {
@@ -48,7 +49,7 @@ func get_bottom_score(tree int, hi int, vi int, rows []string) int {
 }
 
 func get_left_score(tree int, hi int, row string) int {
-	matches := Match{}
+	matches := MatchStack{}
 	for index, tree_compare := range row {
 		if index == hi {
 			break
@@ -66,7 +67,7 @@ func get_left_score(tree int, hi int, row string) int {
 }
 
 func get_right_score(tree int, hi int, row string) int {
-	matches := Match{}
+	matches := MatchQueue{}
 
 	for index, tree_compare := range row {
 		if index <= hi {

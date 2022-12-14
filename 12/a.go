@@ -12,7 +12,7 @@ type Coordinates struct {
 	x int
 }
 
-type SearchQueue = helpers.Stack[Coordinates]
+type SearchQueue = helpers.Queue[Coordinates]
 type Connections = helpers.Stack[Coordinates]
 
 func find_coordinates(s rune, rows []string) Coordinates {
@@ -30,7 +30,7 @@ func find_coordinates(s rune, rows []string) Coordinates {
 func calculate_shortest_path(s Coordinates, e Coordinates, rows []string) int {
 	curr_coordinate := s
 	search_queue := SearchQueue{s}
-	connections := map[Coordinates]*SearchQueue{}
+	connections := map[Coordinates]*Connections{}
 	distances := map[Coordinates]int{}
 	visited := map[Coordinates]bool{}
 
@@ -72,7 +72,7 @@ func calculate_shortest_path(s Coordinates, e Coordinates, rows []string) int {
 
 	// Loop through paths and calculate shortest path to each node given each other possible node
 	// yes...dijkstra's algo
-	for q_len := len(search_queue); q_len > 0; q_len = len(search_queue) {
+	for search_queue.Present() {
 		next := search_queue.Shift()
 
 		for _, node := range *connections[next] {
